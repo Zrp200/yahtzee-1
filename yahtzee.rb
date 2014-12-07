@@ -1,8 +1,8 @@
 #!/usr/bin/ruby
 
-require 'die.rb'
-require 'player.rb'
-require 'round.rb'
+require_relative 'die.rb'
+require_relative 'player.rb'
+require_relative 'round.rb'
 
 class YahtzeeGame
   def initialize(players = 1)

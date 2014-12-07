@@ -1,4 +1,4 @@
-require 'move.rb'
+require_relative 'move.rb'
 
 class Round
   @@upper_moves = [:ones, :twos, :threes, :fours, :fives, :sixes]
