@@ -6,28 +6,18 @@ class Round
 
   def initialize()
     @moves = Hash.new
-    Array.new(@@upper_moves).concat(@@lower_moves).each {|m| @moves[m] = Move.new(m)}
+    Array.new(@@upper_moves).concat(@@lower_moves).each {|m| @moves[m] = Move.new m}
   end
 
-  def upper_total_raw
-    subtotal(@@upper_moves)
-  end
+  def upper_total_raw; subtotal @@upper_moves; end
 
-  def upper_bonus
-    upper_total_raw >= 63 ? 35 : 0
-  end
+  def upper_bonus; upper_total_raw >= 63 ? 35 : 0; end
 
-  def upper_total
-    upper_total_raw + upper_bonus
-  end
+  def upper_total; upper_total_raw + upper_bonus; end
 
-  def lower_total
-    subtotal(@@lower_moves)
-  end
+  def lower_total; subtotal @@lower_moves; end
 
-  def grand_total
-    lower_total + upper_total
-  end
+  def grand_total; lower_total + upper_total; end
 
   def score(move)
     raise "No such move \"${move}\"" if @moves[move].nil?
@@ -39,9 +29,7 @@ class Round
     @moves[move].make(dice)
   end
 
-  def complete?
-    !@moves.any? {|name, move| move.score.nil?}
-  end
+  def complete?; !@moves.any? {|name, move| move.score.nil?}; end
 
   def print
     puts "1s\t\t#{score(:ones)}"
