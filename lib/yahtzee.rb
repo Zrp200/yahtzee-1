@@ -1,47 +1,30 @@
 #!/usr/bin/ruby
 
-require_relative 'die.rb'
-require_relative 'player.rb'
-require_relative 'round.rb'
+require 'die'
+require 'player'
+require 'round'
 
 class YahtzeeGame
-  def initialize(players = 1)
-    @dice = Array.new(5) {Die.new}
-    @no_of_players = players
-    @curr_player_no = 0
-    @players = Array.new(@no_of_players) { Player.new(self) }
-    @rolls = 0
-  end
+  def initialize(players = 1); @dice, @no_of_players, @curr_player_no, @players, @rolls = Array.new(5) {Die.new}, players, 0, Array.new(@no_of_players) {Player.new self}, 0; end
 
   def roll(reroll_dice = [0,1,2,3,4])
     if (@rolls < 3)
       reroll_dice.map {|n| @dice[n] }.each do | die | die.roll end
-      @rolls = @rolls + 1
+      @rolls += 1
     else
       raise "You've had 3 rolls - choose a category to score this turn"
     end
   end
 
-  def end_turn
-    @rolls = 0
-    @curr_player_no = (@curr_player_no + 1) % @no_of_players
-  end
+  def end_turn; @rolls, @curr_player_no = 0, (@curr_player_no + 1) % @no_of_players; end
 
-  def curr_player
-    @players[@curr_player_no]
-  end
+  def curr_player;  @players[@curr_player_no]; end
 
-  def curr_player_no
-    @curr_player_no + 1
-  end
+  def curr_player_no; @curr_player_no + 1; end
 
-  def dice
-    @dice.map {|d| d.num}
-  end
+  def dice; @dice.map {|d| d.num}; end
 
-  def over?
-    !@players.any? {|p| !p.finished?}
-  end
+  def over?; !@players.any? {|p| !p.finished?}; end
 end
 
 key_move_mappings = {"1" => :ones, "2" => :twos, "3" => :threes,
